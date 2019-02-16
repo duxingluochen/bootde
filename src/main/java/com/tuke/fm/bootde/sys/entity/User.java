@@ -1,8 +1,13 @@
 package com.tuke.fm.bootde.sys.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class User implements UserDetails{
 
@@ -13,6 +18,7 @@ public class User implements UserDetails{
     public User(int id){
         this.id = id;
     }
+
     private int id;
     private String login;
     private String password;
@@ -33,8 +39,28 @@ public class User implements UserDetails{
     // 权限集合数据
     private String roleArray;
 
+    public String getRoleArray() {
+        return roleArray;
+    }
+
+    public void setRoleArray(String roleArray) {
+        this.roleArray = roleArray;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
@@ -51,40 +77,41 @@ public class User implements UserDetails{
         return auths;
     }
 
-    /**
-     * 功能描述：组装角色数据集合
-     * @param roleArray
-     */
-    public void packagingRoles(String roleArray){
-        List<UserRole> roles = new ArrayList<UserRole>();
-        if(roleArray!=null){
-            UserRole userRole = null;
-            for(String roleId:roleArray.split(",")){
-                if(!roleId.isEmpty()){
-                    userRole = new UserRole();
-                    userRole.setId(Long.parseLong(roleId));
-                    roles.add(userRole);
-                }
-            }
-        }
-        this.setRoles(roles);
-    }
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getUserName();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 
     public void setPassword(String password) {
@@ -187,19 +214,22 @@ public class User implements UserDetails{
         this.lastLoginDate = lastLoginDate;
     }
 
-    public List<UserRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<UserRole> roles) {
-        this.roles = roles;
-    }
-
-    public String getRoleArray() {
-        return roleArray;
-    }
-
-    public void setRoleArray(String roleArray) {
-        this.roleArray = roleArray;
+    /**
+     * 功能描述：组装角色数据集合
+     * @param roleArray
+     */
+    public void packagingRoles(String roleArray){
+        List<UserRole> roles = new ArrayList<UserRole>();
+        if(roleArray!=null){
+            UserRole userRole = null;
+            for(String roleId:roleArray.split(",")){
+                if(!roleId.isEmpty()){
+                    userRole = new UserRole();
+                    userRole.setId(Long.parseLong(roleId));
+                    roles.add(userRole);
+                }
+            }
+        }
+        this.setRoles(roles);
     }
 }

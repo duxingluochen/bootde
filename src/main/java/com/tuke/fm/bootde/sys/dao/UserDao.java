@@ -5,7 +5,7 @@ import com.tuke.fm.bootde.sys.entity.User;
 /**
  *
  */
-public class UserDao {
+public interface UserDao {
     /**
      * 根据账户来获取用户信息
      * @param Login
