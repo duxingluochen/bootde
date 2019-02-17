@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * security实现配置类
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -45,16 +45,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.headers().frameOptions().disable();
-        http.csrf().disable().authorizeRequests().
-                anyRequest().authenticated()
+        http.csrf().disable().authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("login")
-                .defaultSuccessUrl("login?error=true")
+                .loginPage("/login")
+                .defaultSuccessUrl("/main")
+                .failureUrl("/login?error=true")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/login")
-                .permitAll();
+                .logoutSuccessUrl("/login").
+                permitAll();
     }
 }
