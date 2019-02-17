@@ -4,6 +4,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.tuke.fm.bootde.*.dao")
+@MapperScan("com.tuke.fm.bootde.sys.dao")
 public class MyBatisConfig {
 }
