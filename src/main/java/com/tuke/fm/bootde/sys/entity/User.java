@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     public User(){
         super();
